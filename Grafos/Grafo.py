@@ -2,17 +2,17 @@ from Nodos.Nodo import Nodo
 
 class Grafo:
     """
-    laberinto : laberinto en ASCII
+    laberinto : mapa
     pos_final : punto objetivo
     inicio : Nodo que contiene el punto inicial
     fin : Nodo que contiene el punto final
     abierta : lista con caminos abiertos
     cerrada : lista con caminos cerrados o inutiles
     """
-    def __init__(self,laberinto):
+    def __init__(self,laberinto,inicio,final):
         self.laberinto = laberinto
-        self.pos_final = buscarPosicion('F',self.laberinto)
-        self.inicio = Nodo(self.pos_final,buscarPosicion('I',laberinto),None)
+        self.pos_final = buscarPosicion(final,self.laberinto)
+        self.inicio = Nodo(self.pos_final,buscarPosicion(inicio,laberinto),None)
         self.fin = Nodo(self.pos_final,self.pos_final,None)
         self.abierta = []
         self.cerrada = []
