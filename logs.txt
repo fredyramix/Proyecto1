@@ -1,0 +1,23 @@
+commit 235918d430042c6d8ce959e9a4d68e9bf7356653
+Author: freddy93 <freddyramix@gmail.com>
+Date:   Thu Feb 19 18:02:17 2015 -0600
+
+    En este punto funciona correctamente, sin personajes falta colocar los diferentes costos
+
+commit a1ae92a27b54175403341b4d682f38fb3faba0a0
+Author: freddy93 <freddyramix@gmail.com>
+Date:   Thu Feb 19 15:17:58 2015 -0600
+
+    Ya realiza algoritmo estrella sin Personajes
+
+commit 471b67d645ee527de526556b69636a704b2531cc
+Author: freddy93 <freddyramix@gmail.com>
+Date:   Thu Feb 19 14:57:46 2015 -0600
+
+    Hice el esqueleto del proyecto
+
+commit 9c89306e24b045defde426802628928c7d7c08fb
+Author: freddy93 <freddyramix@gmail.com>
+Date:   Thu Feb 19 10:10:55 2015 -0600
+
+    Inicio de proyecto

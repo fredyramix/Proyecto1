@@ -9,44 +9,49 @@ class Grafo:
     abierta : lista con caminos abiertos
     cerrada : lista con caminos cerrados o inutiles
     """
-    def __init__(self,laberinto,inicio,final):
-        self.laberinto = laberinto
-        self.pos_final = buscarPosicion(final,self.laberinto)
-        self.inicio = Nodo(self.pos_final,buscarPosicion(inicio,laberinto),None)
-        self.fin = Nodo(self.pos_final,self.pos_final,None)
+    def __init__(self,laberinto,inicio,final,p):
+        self.laberinto = laberinto  #Grafo ahora tiene un atributo con todos los nodos.
+       #columnas, filas
+        self.pos_final=final
+        self.inicio=Nodo(self.pos_final,inicio,None,p,laberinto)
+
+        #self.pos_final = buscarPosicion(final,self.laberinto) #buscar posicion nos devuelve x & y de el nodo.
+        #self.inicio = Nodo(self.pos_final,buscarPosicion(inicio,laberinto),None,p,laberinto)
+
+        self.fin = Nodo(self.pos_final,self.pos_final,None,p,laberinto)
         self.abierta = []
         self.cerrada = []
-        self.cerrada.append(self.inicio)
-        self.abierta += self.vecinos(self.inicio)
+        self.cerrada.append(self.inicio) #ponemos en cerrada porque no regresaremos a este nodo.
+        self.abierta += self.vecinos(self.inicio,p,laberinto)
         while self.objetivo():
-            self.buscar()
+            self.buscar(p,laberinto)
         self.camino = self.camino()
 
 
     #Devuelve una lista con vecinos transitables
-    def vecinos(self,nodo):
-        vecinos = []
-        try:
-            if self.laberinto[nodo.posicion[0]+1][nodo.posicion[1]] != '0':
-                vecinos.append(Nodo(self.pos_final,[nodo.posicion[0]+1, nodo.posicion[1]],nodo))
-        except IndexError,e:
-            pass
-        try:
-            if self.laberinto[nodo.posicion[0]-1][nodo.posicion[1]] != '0':
-                vecinos.append( Nodo(self.pos_final,[nodo.posicion[0]-1, nodo.posicion[1]],nodo))
-        except IndexError,e:
-            pass
-        try:
-            if self.laberinto[nodo.posicion[0]][nodo.posicion[1]-1] != '0':
-                vecinos.append(Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]-1],nodo))
-        except IndexError,e:
-            pass
-        try:
-            if self.laberinto[nodo.posicion[0]][nodo.posicion[1]+1] != '0':
-                vecinos.append( Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]+1],nodo))
-        except IndexError, e:
-            pass
-        return vecinos
+    def vecinos(self,nodo,p,laberinto):
+            vecinos = []
+            try:
+                if self.laberinto[nodo.posicion[0]+1][nodo.posicion[1]] != '0':
+                    vecinos.append(Nodo(self.pos_final,[nodo.posicion[0]+1, nodo.posicion[1]],nodo,p,laberinto))
+            except IndexError,e:
+                pass
+            try:
+                if self.laberinto[nodo.posicion[0]-1][nodo.posicion[1]] != '0':
+                    vecinos.append( Nodo(self.pos_final,[nodo.posicion[0]-1, nodo.posicion[1]],nodo,p,laberinto))
+            except IndexError,e:
+                pass
+            try:
+                if self.laberinto[nodo.posicion[0]][nodo.posicion[1]-1] != '0':
+                    vecinos.append(Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]-1],nodo,p,laberinto))
+            except IndexError,e:
+                pass
+            try:
+                if self.laberinto[nodo.posicion[0]][nodo.posicion[1]+1] != '0':
+                    vecinos.append( Nodo(self.pos_final,[nodo.posicion[0], nodo.posicion[1]+1],nodo,p,laberinto))
+            except IndexError, e:
+                pass
+            return vecinos
 
     #Pasa el vecino con menor costo (G+H) a la lista cerrada
     def f_menor(self):
@@ -84,10 +89,10 @@ class Grafo:
                             break
 
     # Analiza el elemento que recien se agrego a la lista cerrada es decir el nodo padre.
-    def buscar(self):
+    def buscar(self,p,laberinto):
         self.f_menor()
         self.select = self.cerrada[-1]
-        self.nodos = self.vecinos(self.select)
+        self.nodos = self.vecinos(self.select,p,laberinto)
         self.ruta()
 
     #Comprueba si el objetivo esta en la lista abierta para terminar de buscar.
@@ -101,7 +106,7 @@ class Grafo:
 
     #Retorna una lista con las posiciones del mejor camino a seguir
     def camino(self):
-        print len(self.abierta)
+        #print len(self.abierta)
         for i in range(len(self.abierta)):
             if self.fin.posicion == self.abierta[i].posicion:
                 objetivo = self.abierta[i]
@@ -112,8 +117,10 @@ class Grafo:
         camino.reverse()
         return camino
 #Escribe una ruta con caracteres ASCII en un archivo
-def escribirSolucion(camino,laberinto,name):
-    sname = "Soluciones\solucion_"+name
+def escribirSolucion(camino,laberinto,name,p,final):
+    Inicio=p.getNombre()
+    Final = final
+    sname = "Soluciones\solucion_"+str(Inicio)+"_"+final+"_"+name+""
     solucion = open(sname,'w')
     for posicion in camino:
         laberinto[ posicion[0]][ posicion[1]] = 'R'

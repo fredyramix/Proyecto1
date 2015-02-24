@@ -14,11 +14,20 @@ class Personaje(object):
         self.forest = costo
         self.earth = costo
         self.mountain = costo
+        self.inicio=[]
 
     def __str__(self):
         p = "Nombre: " + self.nombre + "\nMountain: " + str(self.mountain)+  "\nEarth: " + str(self.earth) +"\nWater: " + str(self.water) + "\nSand: " + str(
         self.sand) + "\nForest: " + str(self.forest)
         return p
+
+    def getInicio(self):
+        return self.inicio
+
+
+    def setInicio(self, x):
+        self.inicio = x
+
 
 
 
