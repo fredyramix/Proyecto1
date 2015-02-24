@@ -8,6 +8,7 @@ __author__ = 'fredy'
 
 
 def main():
+
     p = Personaje("Humano")
     p.setEarth(1)
     p.setForest(4)
@@ -35,6 +36,7 @@ def main():
     list.append(p)
     list.append(m)
     list.append(o)
+    diccionario_costos={}
     name = "camino.txt"
     laberinto = leerArchivo(name)
     destinos={'K':[14,13],'T':[6,7],'P':[12,3]}
@@ -47,9 +49,19 @@ def main():
         for d in dest:
             laberinto = leerArchivo(name)
             algoritmo = Grafo(laberinto,i.getInicio(),destinos[d],i)
+            for g in algoritmo.costos:
+                nom = ""+i.getNombre()[0]+"_"+str(d)
+                diccionario_costos[nom]=g
             escribirSolucion(algoritmo.camino,laberinto,name,i,d)
             #el siguiente codigo es para imprimir de la K,T,P a exit
             laberinto = leerArchivo(name)
-            algoritmo = Grafo(laberinto,destinos[d],exit['S'],i)
-            escribirSolucionSalida(algoritmo.camino,laberinto,name,i,d,exit)
+            algoritmo1 = Grafo(laberinto,destinos[d],exit['S'],i)
+            for h in algoritmo1.costos:
+                nom = ""+i.getNombre()[0]+"_"+str(d)+"_"+"S"
+                diccionario_costos[nom]=h
+            escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit)
+
+
+    print diccionario_costos
+    print len(diccionario_costos)
 main()

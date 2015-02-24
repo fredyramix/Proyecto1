@@ -13,11 +13,10 @@ class Grafo:
         self.laberinto = laberinto  #Grafo ahora tiene un atributo con todos los nodos.
        #columnas, filas
         self.pos_final=final
+        self.costos=[]
         self.inicio=Nodo(self.pos_final,inicio,None,p,laberinto)
-
         #self.pos_final = buscarPosicion(final,self.laberinto) #buscar posicion nos devuelve x & y de el nodo.
         #self.inicio = Nodo(self.pos_final,buscarPosicion(inicio,laberinto),None,p,laberinto)
-
         self.fin = Nodo(self.pos_final,self.pos_final,None,p,laberinto)
         self.abierta = []
         self.cerrada = []
@@ -110,20 +109,24 @@ class Grafo:
         for i in range(len(self.abierta)):
             if self.fin.posicion == self.abierta[i].posicion:
                 objetivo = self.abierta[i]
+                #print objetivo.f
+                self.costos.append(objetivo.f)
+
         camino = []
         while objetivo.padre != None:
             camino.append(objetivo.posicion)
+            #print objetivo.f
             objetivo = objetivo.padre
         camino.reverse()
+
         return camino
-#Escribe una ruta con caracteres ASCII en un archivo
+#Escribe una ruta con caracteres en un archivo
 def escribirSolucion(camino,laberinto,name,p,final):
-    Inicio=p.getNombre()[0]
-    Final = final
-    sname = "Soluciones\solucion_"+str(Inicio)+"_"+final+"_"+name+""
+    inicio=p.getNombre()[0]
+    sname = "Soluciones\solucion_"+str(inicio)+"_"+final+"_"+name+""
     solucion = open(sname,'w')
     for posicion in camino:
-        laberinto[ posicion[0]][ posicion[1]] = Inicio
+        laberinto[ posicion[0]][ posicion[1]] = inicio #Escribe la letra del Personaje
     for i in range(len(laberinto)):
         linea = ""
         for j in range(len(laberinto[0])):

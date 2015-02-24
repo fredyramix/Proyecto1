@@ -17,16 +17,16 @@ class Nodo:
             self.g = 0
         else:
             #raw_input("espera")
-            if str(laberinto[posicion[0]][posicion[1]]) == 1:
+            if str(laberinto[posicion[0]][posicion[1]]) == str(1):
                 self.g = self.padre.g + p.getEarth()
-            elif str(laberinto[posicion[0]][posicion[1]]) == 4:
+            elif str(laberinto[posicion[0]][posicion[1]]) == str(4):
                 self.g = self.padre.g + p.getForest()
-            elif str(laberinto[posicion[0]][posicion[1]]) == 3:
+            elif str(laberinto[posicion[0]][posicion[1]]) == str(3):
                 self.g = self.padre.g + p.getSand()
-            elif str(laberinto[posicion[0]][posicion[1]]) == 2:
+            elif str(laberinto[posicion[0]][posicion[1]]) == str(2):
                 self.g = self.padre.g + p.getWater()
-            else:
-                self.g = self.padre.g + 1000
+            #else:
+                #self.g = self.padre.g + 1000
         self.f = self.g + self.h
 
 # Calcula la distancia manhattan<
