@@ -34,29 +34,22 @@ def main():
     list = []
     list.append(p)
     list.append(m)
-    #list.append(o)
+    list.append(o)
     name = "camino.txt"
     laberinto = leerArchivo(name)
     destinos={'K':[14,13],'T':[6,7],'P':[12,3]}
-    #exit 'S':[2,14]
+    exit ={'S':[2,14]}
     #print "inicio %s " % buscarPosicion(p.getNombre()[0],laberinto)
     #print "final %s " % buscarPosicion(destinos['T'],laberinto)
-
     #algoritmo = Grafo(laberinto,p.getNombre()[0],destinos['T'],p)
     for i in list:
+        dest = destinos.keys()
+        for d in dest:
             laberinto = leerArchivo(name)
-            algoritmo1 = Grafo(laberinto,i.getInicio(),destinos['T'],i)
-            escribirSolucion(algoritmo1.camino,laberinto,name,i,'T')
-
+            algoritmo = Grafo(laberinto,i.getInicio(),destinos[d],i)
+            escribirSolucion(algoritmo.camino,laberinto,name,i,d)
+            #el siguiente codigo es para imprimir de la K,T,P a exit
             laberinto = leerArchivo(name)
-
-            algoritmo2 = Grafo(laberinto,i.getInicio(),destinos['K'],i)
-            escribirSolucion(algoritmo2.camino,laberinto,name,i,'K')
-
-            laberinto = leerArchivo(name)
-
-            algoritmo3 = Grafo(laberinto,i.getInicio(),destinos['P'],i)
-            escribirSolucion(algoritmo3.camino,laberinto,name,i,'P')
-            laberinto = leerArchivo(name)
-
+            algoritmo = Grafo(laberinto,destinos[d],exit['S'],i)
+            escribirSolucionSalida(algoritmo.camino,laberinto,name,i,d,exit)
 main()

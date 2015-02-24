@@ -118,12 +118,27 @@ class Grafo:
         return camino
 #Escribe una ruta con caracteres ASCII en un archivo
 def escribirSolucion(camino,laberinto,name,p,final):
-    Inicio=p.getNombre()
+    Inicio=p.getNombre()[0]
     Final = final
     sname = "Soluciones\solucion_"+str(Inicio)+"_"+final+"_"+name+""
     solucion = open(sname,'w')
     for posicion in camino:
-        laberinto[ posicion[0]][ posicion[1]] = 'R'
+        laberinto[ posicion[0]][ posicion[1]] = Inicio
+    for i in range(len(laberinto)):
+        linea = ""
+        for j in range(len(laberinto[0])):
+            linea = linea + laberinto[i][j] + " "
+        solucion.write(linea+"\n")
+    solucion.close()
+
+def escribirSolucionSalida(camino,laberinto,name,p,final,exit):
+    e = exit.keys()
+    Inicio=p.getNombre()[0]
+    Final = final
+    sname = "Soluciones\solucion_"+str(Inicio)+"_"+final+"_S_"+name+""
+    solucion = open(sname,'w')
+    for posicion in camino:
+        laberinto[ posicion[0]][ posicion[1]] = Inicio
     for i in range(len(laberinto)):
         linea = ""
         for j in range(len(laberinto[0])):
