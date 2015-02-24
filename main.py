@@ -60,8 +60,15 @@ def main():
                 nom = ""+i.getNombre()[0]+"_"+str(d)+"_"+"S"
                 diccionario_costos[nom]=h
             escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit)
+    CostosTotales(diccionario_costos)
 
-
-    print diccionario_costos
-    print len(diccionario_costos)
+def CostosTotales(diccionario):
+    #Humano al K y Salida.
+    costos = diccionario.items()
+    costos.sort()
+    while len(costos)>0:
+        suma=int(costos[0][1])+ int(costos[1][1])
+        print "El costo de "+str(costos[1][0]) + " Es de :" + str(suma)
+        costos.remove((costos[0][0],costos[0][1]))
+        costos.remove((costos[0][0],costos[0][1]))
 main()
