@@ -158,6 +158,13 @@ def leerArchivo(name):
     archivo.close()
     return laberinto
 
+def leerMisiones(name):
+    nombre="Soluciones/"+name
+    archivo = open(nombre,'r')
+    laberinto = [linea.split() for linea in archivo.readlines()]
+    archivo.close()
+    return laberinto
+
 
 def buscarPosicion(x,laberinto):
     for fila in range(len(laberinto)):
