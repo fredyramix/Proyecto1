@@ -3,6 +3,7 @@
 __author__ = 'fredy'
 
 costo = 0
+nada="nada"
 
 
 class Personaje(object):
@@ -15,6 +16,7 @@ class Personaje(object):
         self.earth = costo
         self.mountain = costo
         self.inicio=[]
+        self.mision=nada
 
     def __str__(self):
         p = "Nombre: " + self.nombre + "\nMountain: " + str(self.mountain)+  "\nEarth: " + str(self.earth) +"\nWater: " + str(self.water) + "\nSand: " + str(
@@ -28,6 +30,11 @@ class Personaje(object):
     def setInicio(self, x):
         self.inicio = x
 
+    def getMision(self):
+        return self.mision
+
+    def setMision(self, x):
+        self.mision = x
 
 
 

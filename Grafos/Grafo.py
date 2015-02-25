@@ -123,7 +123,7 @@ class Grafo:
 #Escribe una ruta con caracteres en un archivo
 def escribirSolucion(camino,laberinto,name,p,final):
     inicio=p.getNombre()[0]
-    sname = "Soluciones\solucion_"+str(inicio)+"_"+final+"_"+name+""
+    sname = "Soluciones\ "+str(inicio)+"_"+final+""
     solucion = open(sname,'w')
     for posicion in camino:
         laberinto[ posicion[0]][ posicion[1]] = inicio #Escribe la letra del Personaje
@@ -138,7 +138,7 @@ def escribirSolucionSalida(camino,laberinto,name,p,final,exit):
     e = exit.keys()
     Inicio=p.getNombre()[0]
     Final = final
-    sname = "Soluciones\solucion_"+str(Inicio)+"_"+final+"_S_"+name+""
+    sname = "Soluciones\ "+str(Inicio)+"_"+final+"_P"
     solucion = open(sname,'w')
     for posicion in camino:
         laberinto[ posicion[0]][ posicion[1]] = Inicio

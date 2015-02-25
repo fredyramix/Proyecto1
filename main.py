@@ -39,8 +39,12 @@ def main():
     diccionario_costos={}
     name = "camino.txt"
     laberinto = leerArchivo(name)
-    destinos={'K':[14,13],'T':[6,7],'P':[12,3]}
-    exit ={'S':[2,14]}
+    #K = key
+    # P = Portal
+    # T = Templo
+    # S = Piedras Magicas
+    destinos={'K':[14,13],'T':[6,7],'S':[2,14]}
+    exit ={'P':[12,3]}
     #print "inicio %s " % buscarPosicion(p.getNombre()[0],laberinto)
     #print "final %s " % buscarPosicion(destinos['T'],laberinto)
     #algoritmo = Grafo(laberinto,p.getNombre()[0],destinos['T'],p)
@@ -55,20 +59,62 @@ def main():
             escribirSolucion(algoritmo.camino,laberinto,name,i,d)
             #el siguiente codigo es para imprimir de la K,T,P a exit
             laberinto = leerArchivo(name)
-            algoritmo1 = Grafo(laberinto,destinos[d],exit['S'],i)
+            algoritmo1 = Grafo(laberinto,destinos[d],exit['P'],i)
             for h in algoritmo1.costos:
-                nom = ""+i.getNombre()[0]+"_"+str(d)+"_"+"S"
+                nom = ""+i.getNombre()[0]+"_"+str(d)+"_"+"P"
                 diccionario_costos[nom]=h
             escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit)
-    CostosTotales(diccionario_costos)
+    finales=CostosTotales(diccionario_costos)
+    caminos=SeleccionarMision(finales,list)
+    GenerarUltimoCamino(caminos)
+
+def SeleccionarMision(finales,list):
+    Letras={}
+    destinos={}
+    l=finales.items()
+    l.sort()
+    l.sort(key=lambda x:x[1]) #Aqui ya estan ordenadas por menor costo.
+    print l
+    bandera= True
+    while len(l)>0:
+        a=l[0][0] #obtengo la primer mision de menor costo.
+        if Letras.has_key(a[0]):
+            print "Ya tiene llave"
+        else:
+            if destinos.has_key(a[2]):
+                "Ya tiene ese desitno"
+            else:
+                Letras[a[0]]=l[0][0]
+                destinos[a[2]]=a[2]
+        l.remove((l[0][0],l[0][1]))
+    print Letras
+    return Letras
+def GenerarUltimoCamino():
+
+    #Funcion para generar mapa final.
+    #Solo leera 3 caminos que hay que mezclar.
+    #Las posibles combinaciones son:
+    #Humano - Monkey  = A
+    #Humano - Octopus = B
+    #Monkey- Octopus. = C
+    #Humano - Monkey - Octopus. = D
+
+
+    return
+
 
 def CostosTotales(diccionario):
     #Humano al K y Salida.
+    finales={}
     costos = diccionario.items()
     costos.sort()
     while len(costos)>0:
         suma=int(costos[0][1])+ int(costos[1][1])
         print "El costo de "+str(costos[1][0]) + " Es de :" + str(suma)
+        finales[str(costos[1][0])]=suma
         costos.remove((costos[0][0],costos[0][1]))
         costos.remove((costos[0][0],costos[0][1]))
+    return finales
+
+
 main()
