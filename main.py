@@ -3,9 +3,6 @@ from Personajes.Personaje import Personaje
 
 __author__ = 'fredy'
 
-# Toma un archivo con el laberinto en ASCII, imprime el inicio, el final y busca el mejor camino.
-# Por ultimo escribe un archivo con formato solucion_archivo.txt en donde escribe el mejor camino encontrado.
-
 
 def main():
 
@@ -32,6 +29,9 @@ def main():
     o.setSand(0) #N/A
     o.setWater(1)
     o.setInicio([9,1])
+
+
+
     list = []
     list.append(p)
     list.append(m)
@@ -66,7 +66,9 @@ def main():
             escribirSolucionSalida(algoritmo1.camino,laberinto,name,i,d,exit)
     finales=CostosTotales(diccionario_costos)
     caminos=SeleccionarMision(finales,list)
+    JuntarCaminos(caminos)
     GenerarUltimoCamino(caminos)
+    raw_input("finalizado")
 
 def SeleccionarMision(finales,list):
     Letras={}
@@ -142,7 +144,6 @@ def GenerarUltimoCamino(caminos):
                     linea = linea + primer_camino[i][j] + " "
         solucion.write(linea+"\n")
     solucion.close()
-
     return
 
 

@@ -25,8 +25,8 @@ class Nodo:
                 self.g = self.padre.g + p.getSand()
             elif str(laberinto[posicion[0]][posicion[1]]) == str(2):
                 self.g = self.padre.g + p.getWater()
-            #else:
-                #self.g = self.padre.g + 1000
+            else:
+                self.g = self.padre.g + 1000
         self.f = self.g + self.h
 
 # Calcula la distancia manhattan<

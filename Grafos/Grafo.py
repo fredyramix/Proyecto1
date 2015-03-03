@@ -165,6 +165,37 @@ def leerMisiones(name):
     archivo.close()
     return laberinto
 
+def JuntarCaminos(caminos):
+    l=caminos.items()
+    l.sort()
+    for x in l:
+        salida=x[1]
+        inicio=salida[:3]
+        a=leerMisiones(" "+salida)
+        b=leerMisiones(" "+inicio)
+        print a
+        print a[0]
+        print b
+        print b[0]
+        raw_input("Esperaaaa")
+        count=0
+        nueva=[]
+        for a1 in a:
+            for a2 in a1:
+                count2=0
+                if a2 == b[0][count]:
+                    nueva.append(a2)
+                else:
+                    if a2==salida[0]:
+                        nueva.append(a2)
+                    elif b[0][count]==salida[0]:
+                        nueva.append(b[0][count])
+    #print nueva
+    raw_input("Espera")
+
+
+
+
 
 def buscarPosicion(x,laberinto):
     for fila in range(len(laberinto)):
