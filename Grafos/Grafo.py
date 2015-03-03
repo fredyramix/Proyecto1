@@ -149,6 +149,16 @@ def escribirSolucionSalida(camino,laberinto,name,p,final,exit):
         solucion.write(linea+"\n")
     solucion.close()
 
+def writemision(camino,name):
+    sname = "Soluciones\ "+str(name)
+    solucion = open(sname,'w')
+    for i in range(len(camino)):
+        linea = ""
+        for j in range(len(camino[0])):
+            linea = linea + camino[i][j] + " "
+        solucion.write(linea+"\n")
+    solucion.close()
+
 
 #Para leer un archivo y crear el laberinto
 def leerArchivo(name):
@@ -167,31 +177,71 @@ def leerMisiones(name):
 
 def JuntarCaminos(caminos):
     l=caminos.items()
+    catalogo={'H':'H','M':'M','O':'O'}
+    person={'HMO':'A',' HOM':'A',' MHO':'A',' MOH':'A',' OHM':'A',' OMH':'A',
+            'HM':'B',' MH':'B', #humano con mono
+            ' HO':'C',' OH':'C', #humano con octopus
+            'MO':'D',' OM':'D',#octopus con mono
+            'H':'H','M':'M','O':'O'} #todos juntos es A
     l.sort()
+    m=1
     for x in l:
+        nueva=[]
         salida=x[1]
         inicio=salida[:3]
         a=leerMisiones(" "+salida)
         b=leerMisiones(" "+inicio)
-        print a
-        print a[0]
-        print b
-        print b[0]
-        raw_input("Esperaaaa")
-        count=0
-        nueva=[]
-        for a1 in a:
-            for a2 in a1:
-                count2=0
-                if a2 == b[0][count]:
-                    nueva.append(a2)
+        for i in range(0,len(a)):
+            linea=[]
+            for j in range(0,len(a)):
+                if a[i][j]==b[i][j]:
+                    linea.append(a[i][j])
                 else:
-                    if a2==salida[0]:
-                        nueva.append(a2)
-                    elif b[0][count]==salida[0]:
-                        nueva.append(b[0][count])
-    #print nueva
-    raw_input("Espera")
+                    if catalogo.has_key(str(a[i][j])):
+                        linea.append(catalogo[str(a[i][j])])
+                    elif catalogo.has_key(str(b[i][j])):
+                        linea.append(catalogo[str(b[i][j])])
+            nueva.append(linea)
+        writemision(nueva,m)
+        m=m+1
+
+    a=leerMisiones(" 1")
+    b=leerMisiones(" 2")
+    c=leerMisiones(" 3")
+    nueva=[]
+    for i in range(0,len(a)):
+        linea=[]
+        for j in range(0,len(a)):
+            if a[i][j]==b[i][j] and a[i][j]==c[i][j] and b[i][j]==c[i][j]:
+                    linea.append(a[i][j]) #todos los puntos igualitos
+            else:
+                pruebita=[]
+                p1=a[i][j]
+                p2=b[i][j]
+                p3=c[i][j]
+                try:
+                    int(p1)
+                except ValueError,e:
+                    pruebita.append(p1)
+                    pass
+                try:
+                    int(p2)
+                except ValueError,e:
+                    pruebita.append(p2)
+                    pass
+                try:
+                    int(p3)
+                except ValueError,e:
+                    pruebita.append(p3)
+                    pass
+                fin=""
+                for u in pruebita:
+                    fin+=u
+                linea.append(person[fin])
+        nueva.append(linea)
+    print nueva
+    writemision(nueva,"Mision_Completada.txt")
+
 
 
 
